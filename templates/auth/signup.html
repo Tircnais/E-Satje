@@ -1,0 +1,121 @@
+{% extends './master.html' %}
+
+{% block title %}
+
+Registro
+
+{% endblock%}
+
+{% block css %}
+
+<style>
+    .card-registration .select-input.form-control[readonly]:not([disabled]) {
+        font-size: 1rem;
+        line-height: 2.15;
+        padding-left: .75em;
+        padding-right: .75em;
+    }
+    .card-registration .select-arrow {
+        top: 13px;
+    }
+</style>
+
+{% endblock %}
+
+{% block body %}
+
+{% if session['logged_in'] %};
+
+¡Ya has iniciado sesión!
+
+{% else %}
+
+<form method="POST" action="{{ url_for('register') }}" id="formregistro">
+    <section class="h-100 bg-dark">
+        <div class="container py-1 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col">
+                    <div class="card card-registration my-3">
+                        <div class="row g-0">
+                            <div class="col-xl-6 d-none d-xl-block">
+                                <img src="https://cdn.pixabay.com/photo/2016/12/01/09/06/cash-1874748_640.jpg"
+                                alt="Sample photo" class="img-fluid"
+                                style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;" />
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="card-body p-md-2 text-black">
+                                    <h3 class="mb-3 text-uppercase">Formulario de inscripción de usuarios</h3>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <div class="form-outline">
+                                                <input class="form-control form-control-lg" type="text" id="name" name="name" placeholder="Ingrese su nombre" maxlength="200" />
+                                                <label class="form-label" for="form3Example1m">Nombres</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <div class="form-outline">
+                                                <input class="form-control form-control-lg" type="text" id="lastname" name="lastname" placeholder="Ingrese su apellido" maxlength="200">
+                                                <label class="form-label" for="form3Example1n">Apellidos</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                    
+                                    <div class="form-outline mb-3">
+                                        <input class="form-control form-control-lg" type="email" id="email" name="email" placeholder="Ingrese su email" maxlength="200">
+                                        <label class="form-label" for="form3Example97">Correo</label>
+                                    </div>
+
+                                    <div class="form-outline mb-3">
+                                        <input type="password" class="form-control form-control-lg" id="password" name="password" placeholder="Ingrese su clave" maxlength="50">
+                                        <label class="form-label" for="form3Example97">Clave</label>
+                                    </div>
+                    
+                                    <div class="form-outline d-flex justify-content-end pt-3">
+                                        <button class="btn btn-light btn-lg" type="button" id="limpiar">Limpiar todo</button>
+                                        <button class="btn btn-warning btn-lg ms-2" type="submit" name="register">Registrar</button>
+                                    </div>
+
+                                    <div class="row">
+                                        {% if mesage is defined and mesage %}
+                                            <div class=" text-break alert alert-warning">{{ mesage }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</form>
+{% endif %}
+
+{% endblock %}
+
+{% block script %}
+<script>
+    function limpiarCampos() {
+        // Obtén una referencia al formulario por su ID
+        var formulario = document.getElementById("formregistro");
+
+        // Recorre todos los elementos del formulario
+        for (var i = 0; i < formulario.elements.length; i++) {
+            var elemento = formulario.elements[i];
+
+            // Verifica si el elemento es un campo de entrada (input) o un área de texto (textarea)
+            if (elemento.tagName === "INPUT" || elemento.tagName === "TEXTAREA") {
+                // Limpia el valor del campo
+                elemento.value = "";
+            }
+        }
+    }
+    $(document).ready(function () {
+        
+        document.getElementById("limpiar").addEventListener("click", function() {
+            limpiarCampos();
+        });
+
+    });
+</script>
+{% endblock %}

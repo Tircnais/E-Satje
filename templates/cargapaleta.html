@@ -1,0 +1,93 @@
+{% extends './master.html' %} 
+
+{% block title %} Carga {% endblock %}
+
+{% block body %}
+  <div class="pagetitle">
+    <h1>{{datos['title']}}</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('dashboard') }}">Home</a></li>
+        <li class="breadcrumb-item">Paginas</li>
+        <li class="breadcrumb-item active">Carga Paleta</li>
+      </ol>
+    </nav>
+  </div><!-- End Page Title -->
+
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-6">
+
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Carga de archivo</h5>
+            <p>Recuerde revisar el formato de carga</p>
+            <form method="post" action="/cargar_paleta" enctype="multipart/form-data">
+              <input type="file" name="archivopaleta" accept=".xlsx">
+              <button class="btn btn-primary" id="cargaxlsx">Cargar</button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-lg-6">
+
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Salida</h5>
+            <p id="salida"></p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-12">
+      {% if datos['mensaje'] is defined and datos['mensaje'] %}
+        <div class="alert alert-warning" id="salida">{{ datos['mensaje'] }}</div>
+      {% endif %}
+    </div>
+  </section>
+
+{% endblock %}
+
+{% block script %}
+
+<script>
+  $(document).ready(function () {
+    document.getElementById("cargaxlsx").addEventListener("click", function () {
+      // Obtener el elemento por su id
+      let salida = document.getElementById("salida");
+      // Obtener el texto original del elemento
+      var textoOriginal = salida.textContent; // O elemento.innerHTML si deseas el contenido HTML
+      // Cambiar el texto por otro
+      salida.textContent = "Cargando archivo.\nEspere..."; // O elemento.innerHTML = "Nuevo contenido HTML";
+
+      // Envía el número de proceso al servidor utilizando una solicitud POST
+      fetch("/cargar_paleta", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        //body: JSON.stringify({ File: num_proceso }),
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        // alert(data);  // Muestra la respuesta del servidor en una alerta
+        console.info(data);
+        salida.textContent = data.salida;
+      })
+      .catch((data) => {
+        // {Error: `Error: SyntaxError: Unexpected token '<', "<!doctype "... is not valid JSON`}
+        var logerror = { Error: "Error: " + data };
+        console.log(logerror);
+        //salida.textContent = "Error al cargar archivo " + logerror[0];
+        // console.log(logerror.Error);
+      });
+    });
+    
+  });
+</script>
+
+{% endblock %}

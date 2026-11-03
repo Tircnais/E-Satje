@@ -1,0 +1,74 @@
+{% extends './master.html' %} 
+{% block title %} {{datos['title']}} {% endblock %}
+
+{% block body %}
+<div class="row justify-content-center">
+  <div class="col-md-6 text-center mb-2">
+    <h2 class="heading-section">{{datos['title']}}</h2>
+  </div>
+</div>
+<div class="row justify-content-center">
+  <div class="col-md-8 text-justify">
+    <h3>Extraer datos del juicio</h3>
+    <p>
+      Ingrese el numero de proceso
+      <input id="numeroproceso" type="text" value="" placeholder="Ingresa el numero de proceso 'XXXXX-XXXX-XXXXX'"/>
+      <button id="busqueda">Busqueda Satje</button>
+    </p>
+  </div>
+  <div class="col-md-4 text-justify">
+    <p id="salida"></p>
+  </div>
+</div>
+{% endblock %} {% block script %}
+<script>
+  $(document).ready(function () {
+    document.getElementById("busqueda").addEventListener("click", function () {
+      console.log("Consultando espere...");
+
+      let numeroProceso = document.getElementById("numeroproceso").value;
+      // rempleazo los "-" para poder enviar al API
+      numeroProceso = numeroProceso.replace(/-/g, '');
+      let num_proceso = numeroProceso;
+      // Limpia el contenido del input
+      numeroProceso.value = "";
+      document.getElementById("numeroproceso").value = "";
+      // Obtener el elemento por su id
+      let salida = document.getElementById("salida");
+      // Obtener el texto original del elemento
+      var textoOriginal = salida.textContent; // O elemento.innerHTML si deseas el contenido HTML
+      // Cambiar el texto por otro
+      salida.textContent =
+        "Número de proceso: " + num_proceso + "\nConsultando espere..."; // O elemento.innerHTML = "Nuevo contenido HTML";
+
+      // Envía el número de proceso al servidor utilizando una solicitud POST
+      fetch("/extraeinfo", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ num_proceso: num_proceso }),
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        // alert(data);  // Muestra la respuesta del servidor en una alerta
+        // console.info(data);
+        salida.textContent = data.salida;
+        var nuevoEnlace = document.createElement("a");
+        nuevoEnlace.setAttribute("href", "/ver_detalle/" + data[i].id);
+        nuevoEnlace.className = "btn btn-success";
+        nuevoEnlace.innerHTML = "VER DETALLE";
+        console.info("nuevoEnlace:",nuevoEnlace);
+        // salida.textContent = nuevoEnlace;
+      })
+      .catch((error) => {
+        var logerror = { Error: "Error: " + error };
+        salida.textContent = "Consultando el API:  " + logerror.Error;
+        // console.log(logerror.Error);
+      });
+    });
+
+  });
+
+</script>
+{% endblock %}

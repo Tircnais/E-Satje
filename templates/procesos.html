@@ -1,0 +1,233 @@
+{% extends './master.html' %} 
+{% block title %} {{datos['title']}} {% endblock %}
+
+{% block body %}
+<div class="row justify-content-center">
+  <div class="col-md-6 text-center mb-2">
+    <h2 class="heading-section">{{datos['title']}}</h2>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <div class="table-wrap">
+      <!--ID CLASS display tabla paginacion y busqueda-->
+      <table class="table table-striped display" id="home">
+        <thead>
+          <tr>
+            <th>Procedimiento</th>
+            <th>Cédula</th>
+            <th>Nombre del cliente</th>
+            <th>Num. Proceso</th>
+            <th>Num. Obligacion</th>
+            <th>Fecha Creación</th>
+            <th>Ult. Actuación</th>
+            <th>Fecha Ult. Actuación</th>
+            <th>VER</th>
+          </tr>
+        </thead>
+        <tbody id="data-body">
+          <!-- Aqui se introduce la parte de datos en tiempo real via JQUERY (json)-->
+          <!-- {{ datos['listado']['datos'] }} -->
+          {% if datos['listado']['datos']|length > 0 %} {% for elemento in datos['listado']['datos'] %}
+          <tr>
+            <!-- <th scope="row">{{ elemento.id }}</th> -->
+            <td>{{elemento.tipoaccion}}</td>
+            <td>{{elemento.cedula}}</td>
+            <td>{{elemento.nombres}}</td>
+            <td>
+              {% if elemento.numproceso and elemento.numproceso|length >= 14 %}
+                {{ elemento.numproceso[:5] }}-{{ elemento.numproceso[5:9] }}-{{ elemento.numproceso[9:] }}
+              {% else %}
+                {{ elemento.numproceso }}
+              {% endif %}
+            </td>
+            <td>{{elemento.no_obligacion}}</td>
+            <td>{{elemento.f_creaccion}}</td>
+            <td>{{elemento.actuacion}}</td>
+            <td>{{elemento.fecha_actuacion}}</td>
+            <td>
+              <a
+                class="btn btn-success"
+                href="{{ url_for('ver_detalle', id=elemento.id) }}"
+                >VER DETALLE</a
+              >
+            </td>
+          </tr>
+          {% endfor %} {% else %}
+          <tr>
+            <td></td>
+            <td></td>
+            <td>
+              <center>Sin resultados</center>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %} {% block script %}
+<script>
+  $(document).ready(function () {
+    $("#home").DataTable({
+      dom: "Bfrtip",
+      /*
+      buttons: ["copy", "csv", "excel", "pdf", "print"],
+      exportOptions: {
+        columns: [0,1, 2, 3], // Exporta solo las columnas 0, 1 y 3
+      },
+      */
+      buttons: [
+        {
+          extend: 'copy',
+          text: 'Copiar',
+          exportOptions: {
+              columns: [0, 1, 2, 3, 4, 6, 7] // Especifica las columnas que deseas exportar (0, 1 y 2), excluye la columna 3 (índices basados en 0).
+          }
+        },
+        {
+          extend: 'csv',
+          text: 'Exportar a CSV',
+          exportOptions: {
+              columns: [0, 1, 2, 3, 4, 6, 7] // Especifica las columnas que deseas exportar (0, 1 y 2), excluye la columna 3 (índices basados en 0).
+          }
+        },
+        {
+          extend: 'excel',
+          text: 'Exportar a Excel',
+          exportOptions: {
+              columns: [0, 1, 2, 3, 4, 6, 7] // Especifica las columnas que deseas exportar (0, 1 y 2), excluye la columna 3 (índices basados en 0).
+          }
+        },
+        /*
+        {
+          extend: 'pdf',
+          text: 'Exportar a PDF',
+          exportOptions: {
+            columns: [0, 1, 2, 3, 4, 6, 7] // Igual que en el caso de Excel, especifica las columnas a exportar.
+          }
+        },
+        */
+        {
+          extend: 'print',
+          text: 'Impirmir',
+          exportOptions: {
+              columns: [0, 1, 2, 3, 4, 6, 7] // Especifica las columnas que deseas exportar (0, 1 y 2), excluye la columna 3 (índices basados en 0).
+          }
+        }
+      ],
+      language: {
+        lengthMenu: "Mostrar _MENU_ registros por página",
+        zeroRecords: "Sin resultados",
+        info: "Mostrando la página _PAGE_ de _PAGES_",
+        infoEmpty: "No hay registros disponibles",
+        infoFiltered: "(filtrado de _MAX_ registros totales)",
+        search: "Búsqueda:",
+        loadingRecords: "Cargando...",
+        processing: "Procesando...",
+        paginate: {
+          first: "Inicio",
+          last: "Último",
+          next: "Siguiente",
+          previous: "Anterior",
+        },
+      },
+    });
+
+    // Actualizar los datos cada 5 segundos
+    setInterval(updateData, 5000);
+  });
+
+  // Función para actualizar los datos en la página
+  function updateData() {
+    $.ajax({
+      // nombre que proviene del a ruta
+      url: "/data",
+      type: "GET",
+      dataType: "json",
+      success: function (data) {
+        var tableBody = document.getElementById("data-body");
+        // Limpiar el contenido actual del cuerpo de la tabla
+        tableBody.innerHTML = '';
+        console.info("reinicio");
+        // console.info(data['datos'][0]);
+        for (var i = 0; i < data['datos'].length; i++) {
+          var row = document.createElement("tr");
+
+          var colAccion = document.createElement("td");
+          colAccion.innerText = data['datos'][i].tipoaccion;
+          var colCi = document.createElement("td");
+          colCi.innerText = data['datos'][i].cedula;
+          var colNo = document.createElement("td");
+          colNo.innerText = data['datos'][i].nombres;
+          var colNu = document.createElement("td");
+          colNu.innerText = data['datos'][i].no_obligacion;
+          var colPr = document.createElement("td");
+          // Formatear el número de proceso
+          var numProceso = data['datos'][i].numproceso.replace(/(\d{5})(\d{4})(\d{5})/, '$1-$2-$3');
+          // Ahora 'formatoProceso' tiene el valor en el formato 'XXXXX-XXXX-XXXXX'
+          // console.log(numProceso);
+          colPr.innerText = numProceso;
+          var colFeCre = document.createElement("td");
+          var colAct = document.createElement("td");
+          var colFeAct = document.createElement("td");
+          var colEn = document.createElement("td");
+
+          // Fecha en formato
+          var fechaCreacion = new Date(data['datos'][i].f_creaccion);
+          var actuacion = data['datos'][i].actuacion;
+          var fechaActuacion = new Date(data['datos'][i].fecha_actuacion);
+          // console.info("fechaOriginal: ", data['datos'][i]);
+          // Obtén la zona horaria actual del sistema
+          var zonaHoraria = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+          // Crea una instancia de objeto 'Date' en la zona horaria actual
+          var fechaCFormateada = new Date(fechaCreacion.toLocaleString("en-US", { timeZone: zonaHoraria }));
+          var fechaAFormateada = new Date(fechaActuacion.toLocaleString("en-US", { timeZone: zonaHoraria }));
+          // console.info("fechaCFormateada: ", fechaCFormateada);
+          
+          // Formatea la fecha en el formato deseado (con milisegundos)
+          var fechaCFormateadaString = fechaCFormateada.toISOString().replace("T", " ").replace("Z", "");
+          var fechaAFormateadaString = fechaAFormateada.toISOString().replace("T", " ").replace("Z", "");
+          // console.info("fechaCFormateadaString: ", fechaCFormateadaString);
+          colFeCre.innerText = fechaCFormateadaString;
+          colAct.innerText = actuacion;
+          // console.log("Ultima actuacion: ", actuacion);
+          colFeAct.innerText = fechaAFormateadaString;
+
+          var nuevoEnlace = document.createElement("a");
+          nuevoEnlace.setAttribute("href", "/ver_detalle/" + data['datos'][i].id);
+          nuevoEnlace.className = "btn btn-success";
+          nuevoEnlace.innerHTML = "VER DETALLE";
+          colEn.appendChild(nuevoEnlace);
+          // Agregar las celdas a la fila
+          row.appendChild(colAccion);
+          row.appendChild(colCi);
+          row.appendChild(colNo);
+          row.appendChild(colPr);
+          row.appendChild(colNu);
+          row.appendChild(colFeCre);
+          row.appendChild(colAct);
+          row.appendChild(colFeAct);
+          row.appendChild(colEn);
+
+          tableBody.appendChild(row);
+        }
+      },error: function(xhr, status, error){
+        // Manejo de errores aquí
+        console.error("Error en la solicitud AJAX:");
+        console.error("Estado de la solicitud:", status);
+        console.error("Error:", error);
+        console.error("Respuesta del servidor:", xhr.responseText);
+
+        let salida = document.getElementById("salida");
+        salida.textContent = "Error al extraer info proceso " + status + "<br>" +error;
+      }
+    });
+  }
+</script>
+{% endblock %}

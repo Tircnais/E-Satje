@@ -1,0 +1,134 @@
+{% extends './master.html' %} 
+
+{% block title %} {{datos['title']}} {% endblock%}
+
+{% block body %}
+<div class="row justify-content-center">
+  <div class="col-md-12 text-center mb-2">
+    <h2 class="heading-section">{{datos['title']}}</h2>
+  </div>
+</div>
+<div class="row justify-content-center">
+  <div class="col-md-12 text-justify">
+    {% if datos['listado']|length > 0 %}
+    <div class="row">
+      <div class="col-12">
+        <h3 class="center"><b>Número de proceso:</b> 
+          {% if datos['listado'][0].numproceso and datos['listado'][0].numproceso|length >= 14 %}
+            {{ datos['listado'][0].numproceso[:5] }}-{{ datos['listado'][0].numproceso[5:9] }}-{{ datos['listado'][0].numproceso[9:] }}
+          {% else %}
+            {{ datos['listado'][0].numproceso }}
+          {% endif %}
+        </h3>
+      </div>
+    </div>
+    <div class="row">
+      {% for elemento in datos['listado'] %}
+      {% if "DEPRECATORIOS" in elemento.tipo %}
+      <h4 class="center">Datos Generales</h4>
+      <div class="col-12 card">
+        <div class="row card-body">
+          <div class="col-md-6 icon-box aos-init aos-animate" data-aos="fade-up">
+            <h4><i class="bx bx-receipt"></i> Demandado</h4>
+            <p>{{ elemento.nombres }}</p>
+          </div>
+          <div class="col-md-6 icon-box aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+            <h4><i class="bx bx-cube-alt"></i> Ofendido</h4>
+            <p>{{ elemento.ofendido }}</p>
+          </div>
+          <div class="col-md-6 icon-box aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
+            <h4><i class="bx bx-images"></i> Delito</h4>
+            <p>{{ elemento.delito }}</p>
+          </div>
+          <div class="col-md-6 icon-box aos-init aos-animate" data-aos="fade-up" data-aos-delay="300">
+            <h4><i class="bx bx-shield"></i> Judicatura</h4>
+            <p>{{ elemento.judicatura }}</p>
+          </div>
+          <div class="col-md-6 icon-box aos-init aos-animate" data-aos="fade-up" data-aos-delay="400">
+            <h4><i class="bx bx-atom"></i> Materia</h4>
+            <p>{{ elemento.materia }}</p>
+          </div>
+          <div class="col-md-6 icon-box aos-init aos-animate" data-aos="fade-up" data-aos-delay="500">
+            <h4><i class="bx bx-id-card"></i> Tipo acción</h4>
+            <p>{{ elemento.tipoaccion }}</p>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Detalle de actuaciones -->
+      <div class="col-12">
+        <div class="table-wrap">
+          <h5>Detalle de actuaciones</h5>
+          <!--ID CLASS display tabla paginacion y busqueda-->
+          <table class="table table-striped display nowrap detalle" id="detalle">
+            <thead>
+              <tr>
+                <th class="col-3">Fecha de actuación</th>
+                <th class="col-2">Actuación</th>
+                <th class="col-7">Detalle</th>
+              </tr>
+            </thead>
+            <tbody id="data-body">
+              <!-- Recorre nuevamente para extraer el detalle -->
+              {% for actuaciones in datos['listado'] %}
+                {% if "DETALLEACTUACIONES" in actuaciones.tipo %}
+                  {% set numero = elemento.Movimiento %}
+                  {% set movdepre = numero|string %}
+                
+                  {% if movdepre == actuaciones.numproceso %}
+                
+                    <!-- {{ elemento.Movimiento }}: {{ actuaciones.Movimiento }} - {{ actuaciones.numproceso }} -->
+                    <!--Aqui se introduce la parte de datos en tiempo real via JQUERY (json)-->
+                    <tr>
+                      <td class="col-3">{{ actuaciones.fecha_ingreso }}</td>
+                      <th class="col-2">{{ actuaciones.delito }}</th>
+                      <td class="col-7">{{ actuaciones.ofendido }}</td>
+                    </tr>
+
+                  
+                  {% endif %}                      
+                {% endif %}
+              {% endfor %}
+            </tbody>
+          </table>         
+        </div>
+      </div>
+      
+      {% endif %}
+      {% endfor %}
+    {% else %}
+      <h3>No hay resultados que mostrar</h3>
+    {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+  $(document).ready(function () {
+    $(".detalle").DataTable({
+      dom: "Bfrtip",
+      buttons: ["copy", "csv", "excel", "pdf", "print"],
+      language: {
+        lengthMenu: "Mostrar _MENU_ registros por página",
+        zeroRecords: "Sin resultados",
+        info: "Mostrando la página _PAGE_ de _PAGES_",
+        infoEmpty: "No hay registros disponibles",
+        infoFiltered: "(filtrado de _MAX_ registros totales)",
+        search: "Búsqueda:",
+        loadingRecords: "Cargando...",
+        processing: "Procesando...",
+        paginate: {
+          first: "Inicio",
+          last: "Último",
+          next: "Siguiente",
+          previous: "Anterior",
+        },
+      },
+      title: "Detalle de actuaciones", // Aquí defines el título de la tabla
+    });
+  });
+</script>
+{% endblock %}
