@@ -1,0 +1,59 @@
+2026-11-03 14:26:36,640 [INFO] WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.100.3:5000
+2026-11-03 14:26:36,640 [INFO] Press CTRL+C to quit
+2026-11-03 14:26:36,642 [INFO]  * Restarting with stat
+2026-11-03 14:26:37,160 [WARNING]  * Debugger is active!
+2026-11-03 14:26:37,173 [INFO]  * Debugger PIN: 664-860-883
+2026-11-03 14:26:44,859 [INFO] 127.0.0.1 - - [03/Nov/2026 14:26:44] "GET /api/consultar?criterio=0932201915797 HTTP/1.1" 405 -
+2026-11-03 14:26:44,919 [INFO] 127.0.0.1 - - [03/Nov/2026 14:26:44] "GET /favicon.ico HTTP/1.1" 404 -
+2026-11-03 14:26:53,765 [INFO] 127.0.0.1 - - [03/Nov/2026 14:26:53] "GET /api/consultar?criterio=17230-2022-19079 HTTP/1.1" 405 -
+2026-11-03 14:27:26,131 [INFO] Iniciando consulta al API para el proceso: 17230202218335
+2026-11-03 14:27:28,235 [ERROR] Proceso 17230202218335 - Excepción de conexión con el API: HTTPConnectionPool(host='186.3.198.68', port=89): Max retries exceeded with url: /ApirestProcesosJudicialesJSON?url=17230202218335 (Caused by NewConnectionError("HTTPConnection(host='186.3.198.68', port=89): Failed to establish a new connection: [WinError 10061] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión"))
+2026-11-03 14:27:28,236 [INFO] 127.0.0.1 - - [03/Nov/2026 14:27:28] "GET /api/consultar/17230202218335 HTTP/1.1" 500 -
+2026-11-03 14:27:28,471 [INFO] 127.0.0.1 - - [03/Nov/2026 14:27:28] "GET /favicon.ico HTTP/1.1" 404 -
+2026-11-03 14:29:50,742 [INFO]  * Detected change in 'E:\\Documentos\\EntornosPython\\appFlask\\E-Satje\\app_bk.py', reloading
+2026-11-03 14:29:50,833 [INFO]  * Restarting with stat
+2026-11-03 14:29:51,408 [WARNING]  * Debugger is active!
+2026-11-03 14:29:51,419 [INFO]  * Debugger PIN: 664-860-883
+2026-11-03 14:30:07,895 [INFO]  * Detected change in 'E:\\Documentos\\EntornosPython\\appFlask\\E-Satje\\app_bk.py', reloading
+2026-11-03 14:30:07,949 [INFO]  * Restarting with stat
+2026-11-03 14:30:08,559 [WARNING]  * Debugger is active!
+2026-11-03 14:30:08,570 [INFO]  * Debugger PIN: 664-860-883
+2026-11-03 14:30:18,356 [INFO] WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.100.3:5000
+2026-11-03 14:30:18,356 [INFO] Press CTRL+C to quit
+2026-11-03 14:30:18,358 [INFO]  * Restarting with stat
+2026-11-03 14:30:18,862 [WARNING]  * Debugger is active!
+2026-11-03 14:30:18,872 [INFO]  * Debugger PIN: 664-860-883
+2026-11-03 14:30:23,822 [INFO] Iniciando consulta al API para el proceso: 17230202219079
+2026-11-03 14:30:25,967 [ERROR] Proceso 17230202219079 - Excepción de conexión con el API: HTTPConnectionPool(host='186.3.198.68', port=89): Max retries exceeded with url: /ApirestProcesosJudicialesJSON?url=17230202219079 (Caused by NewConnectionError("HTTPConnection(host='186.3.198.68', port=89): Failed to establish a new connection: [WinError 10061] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión"))
+2026-11-03 14:30:25,969 [INFO] 127.0.0.1 - - [03/Nov/2026 14:30:25] "GET /api/consultar?criterio=17230-2022-19079 HTTP/1.1" 500 -
+2026-11-03 14:30:26,027 [INFO] 127.0.0.1 - - [03/Nov/2026 14:30:26] "GET /favicon.ico HTTP/1.1" 404 -
+2026-11-03 14:32:37,865 [INFO]  * Detected change in 'E:\\Documentos\\EntornosPython\\appFlask\\E-Satje\\app_bk.py', reloading
+2026-11-03 14:32:37,911 [INFO]  * Restarting with stat
+2026-11-03 14:32:38,463 [WARNING]  * Debugger is active!
+2026-11-03 14:32:38,473 [INFO]  * Debugger PIN: 664-860-883
+2026-11-03 14:32:41,551 [INFO]  * Detected change in 'E:\\Documentos\\EntornosPython\\appFlask\\E-Satje\\app_bk.py', reloading
+2026-11-03 14:32:41,609 [INFO]  * Restarting with stat
+2026-11-03 14:32:42,141 [WARNING]  * Debugger is active!
+2026-11-03 14:32:42,153 [INFO]  * Debugger PIN: 664-860-883
+2026-11-03 14:32:46,450 [INFO] WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.100.3:5000
+2026-11-03 14:32:46,450 [INFO] Press CTRL+C to quit
+2026-11-03 14:32:46,452 [INFO]  * Restarting with stat
+2026-11-03 14:32:46,988 [WARNING]  * Debugger is active!
+2026-11-03 14:32:46,999 [INFO]  * Debugger PIN: 664-860-883
+2026-11-03 14:32:53,804 [INFO] Iniciando consulta al API para el proceso: 17230202219079
+2026-11-03 14:32:55,947 [ERROR] Proceso 17230202219079 - Excepción de conexión con el API: HTTPConnectionPool(host='186.3.198.68', port=89): Max retries exceeded with url: /ApirestProcesosJudicialesJSON?url=17230202219079 (Caused by NewConnectionError("HTTPConnection(host='186.3.198.68', port=89): Failed to establish a new connection: [WinError 10061] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión"))
+2026-11-03 14:32:55,949 [INFO] 127.0.0.1 - - [03/Nov/2026 14:32:55] "GET /api/consultar?criterio=17230-2022-19079 HTTP/1.1" 200 -
+2026-11-03 14:32:55,987 [INFO] 127.0.0.1 - - [03/Nov/2026 14:32:55] "GET /favicon.ico HTTP/1.1" 404 -
+2026-11-03 14:32:56,843 [INFO] Iniciando consulta al API para el proceso: 17230202218335
+2026-11-03 14:32:58,969 [ERROR] Proceso 17230202218335 - Excepción de conexión con el API: HTTPConnectionPool(host='186.3.198.68', port=89): Max retries exceeded with url: /ApirestProcesosJudicialesJSON?url=17230202218335 (Caused by NewConnectionError("HTTPConnection(host='186.3.198.68', port=89): Failed to establish a new connection: [WinError 10061] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión"))
+2026-11-03 14:32:58,970 [INFO] 127.0.0.1 - - [03/Nov/2026 14:32:58] "GET /api/consultar/17230202218335 HTTP/1.1" 500 -
+2026-11-03 14:32:58,997 [INFO] 127.0.0.1 - - [03/Nov/2026 14:32:58] "GET /favicon.ico HTTP/1.1" 404 -

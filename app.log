@@ -1,0 +1,15 @@
+2026-11-03 14:17:29,624 [INFO] WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+2026-11-03 14:17:29,624 [INFO] Press CTRL+C to quit
+2026-11-03 14:17:29,628 [INFO]  * Restarting with stat
+2026-11-03 14:17:30,391 [WARNING]  * Debugger is active!
+2026-11-03 14:17:30,403 [INFO]  * Debugger PIN: 664-860-883
+2026-11-03 14:17:53,030 [INFO] Iniciando Web Scraping en el SATJE para el criterio: 0932201915797
+2026-11-03 14:18:14,739 [ERROR] Error durante el scraping para 0932201915797: Page.wait_for_selector: Timeout 10000ms exceeded.
+Call log:
+  - waiting for locator("mat-row, tr") to be visible
+
+2026-11-03 14:18:15,871 [INFO] 127.0.0.1 - - [03/Nov/2026 14:18:15] "GET /api/consultar?criterio=0932201915797 HTTP/1.1" 500 -
+2026-11-03 14:18:15,922 [INFO] 127.0.0.1 - - [03/Nov/2026 14:18:15] "GET /favicon.ico HTTP/1.1" 404 -
+2026-11-03 14:25:25,829 [INFO]  * Detected change in 'E:\\Documentos\\EntornosPython\\appFlask\\E-Satje\\app_bk.py', reloading
+2026-11-03 14:25:25,888 [INFO]  * Restarting with stat
