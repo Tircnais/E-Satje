@@ -1,0 +1,14 @@
+{
+    "estado": 200,
+    "ip_publica": "186.4.186.102",
+    "movimiento": {
+        "delito": "Proceso 17230-2021-13973",
+        "demandado": "Benitez Benavides Cesar Raul",
+        "detalle_actuaciones": [],
+        "fecha_ingreso": "03/11/2026 23:22",
+        "judicatura": "UNIDAD JUDICIAL",
+        "numero_proceso": "17230202113973",
+        "ofendido": "Banco Diners Club Del Ecuador S.a.",
+        "tipo_accion": "MONITORIO"
+    }
+}
